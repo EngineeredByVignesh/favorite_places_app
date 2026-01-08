@@ -20,7 +20,6 @@ jobs:
         run: |
           echo "dummy coverage" > coverage.txt
 
-      # 3️⃣ Download Codecov uploader
       - name: Download Codecov uploader
         run: |
           curl -Os https://uploader.codecov.io/latest/linux/codecov
