@@ -1,25 +1,33 @@
-name: coverage
+# .github/workflows/coverage.yml
+name: PR Coverage
+
 on:
   pull_request:
 
 jobs:
-  test:
+  coverage:
     runs-on: ubuntu-latest
+
     steps:
-      - uses: actions/checkout@v4
+      # 1️⃣ Checkout the code
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0  # Needed to detect commits for coverage
 
-      # Generate coverage (dummy for now)
-      - name: Generate coverage
-        run: echo "ok" > coverage.txt
+      # 2️⃣ Generate coverage (for now, a dummy file)
+      - name: Generate dummy coverage
+        run: |
+          echo "dummy coverage" > coverage.txt
 
-      # Install Codecov uploader
+      # 3️⃣ Download Codecov uploader
       - name: Download Codecov uploader
         run: |
           curl -Os https://uploader.codecov.io/latest/linux/codecov
           chmod +x codecov
 
-      # Upload coverage using GitHub App (no token needed)
-      - name: Upload coverage to self-hosted Codecov
+      # 4️⃣ Upload coverage to self-hosted Codecov
+      - name: Upload coverage
         run: |
-          ./codecov -f coverage.txt -U -y codecov.yml -R . \
+          ./codecov -f coverage.txt -t ${{ secrets.CODECOV_TOKEN }} \
             -u https://unerodent-milkier-isis.ngrok-free.dev
